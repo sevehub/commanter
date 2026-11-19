@@ -6,12 +6,16 @@ Requires Vim 9.0+.
 
 ## Install
 
-Copy the folders into your runtime path:
+Install with [Vim9-Plum](https://github.com/sevehub/vim9-plum).
+Add one line to `~/.vimplugins`:
 
-- Windows: `%USERPROFILE%\vimfiles\`
-- Linux/macOS: `~/.vim/`
+```
+sevehub/commanter
+```
+Then restart Vim. Plum  clones the plugin on startup.
+Plum is the only recommended install method.
 
-Or clone into a package directory, for example `~/.vim/pack/plugins/start/commanter`.
+
 Then run `:helptags ALL` (or `:helptags ~/.vim/doc`) to enable `:help commanter`.
 
 ## Default keys
