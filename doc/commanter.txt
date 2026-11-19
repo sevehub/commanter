@@ -1,0 +1,85 @@
+*commanter.txt*  Comment, uncomment or toggle lines and ranges
+
+==============================================================================
+CONTENTS                                                *commanter-contents*
+
+    1. Mappings ......................... |commanter-mappings|
+    2. Commands ......................... |commanter-commands|
+    3. Settings ......................... |commanter-settings|
+    4. Behavior ......................... |commanter-behavior|
+
+==============================================================================
+1. Mappings                                             *commanter-mappings*
+
+<leader>c               Comment. Normal mode acts on the current line and takes
+                        a count. Visual mode acts on the selection.
+
+<leader><space>         Uncomment. Same modes and count as above.
+
+<leader>,               Toggle. Uncomments when every non-blank line is commented,
+                        otherwise comments. Same modes and count as above.
+                        <C-,> can be used instead in gVim or in a terminal with
+                        modifyOtherKeys / kitty keyboard protocol. See
+                        |g:commanter_map_toggle|.
+
+==============================================================================
+2. Commands                                             *commanter-commands*
+
+:[range]Comment                                                      *:Comment*
+        Comment the lines in [range] (default: current line).
+
+:[range]Uncomment                                                  *:Uncomment*
+        Remove the comment marker from the lines in [range].
+
+:[range]CommentToggle                                          *:CommentToggle*
+        Uncomment when every non-blank line in [range] is commented, otherwise
+        comment.
+
+==============================================================================
+3. Settings                                             *commanter-settings*
+
+Set these before the plugin loads.
+
+                                                    *g:commanter_map_comment*
+g:commanter_map_comment
+        Left-hand side for commenting. Default: '<leader>c'. Empty string
+        disables the mapping.
+
+                                                  *g:commanter_map_uncomment*
+g:commanter_map_uncomment
+        Left-hand side for uncommenting. Default: '<leader><space>'. Empty
+        string disables the mapping.
+
+                                                     *g:commanter_map_toggle*
+g:commanter_map_toggle
+        Left-hand side for |:CommentToggle|. Default: '<leader>,'. Empty string
+        disables the mapping. Example for gVim: >
+            g:commanter_map_toggle = '<C-,>'
+<
+
+                                                         *g:commanter_markers*
+g:commanter_markers
+        Dictionary mapping a filetype to a marker string in the format of
+        'commentstring'. Example: >
+            g:commanter_markers = {python: '# %s', html: '<!-- %s -->'}
+<
+        Overrides built-in defaults and 'commentstring'.
+
+==============================================================================
+4. Behavior                                             *commanter-behavior*
+
+Marker lookup order:
+    1. |g:commanter_markers|
+    2. Built-in defaults (typst, json, conf, dosbatch, ps1)
+    3. 'commentstring'
+
+For the "vim" filetype, "#" is used when "vim9script" appears in the first 20
+lines of the buffer, otherwise '"'.
+
+Commenting aligns the marker at the lowest indent found in the range and skips
+blank lines. Uncommenting removes the marker with one following space and, for
+block markers, the closing marker. Lines without the marker are unchanged.
+
+Limits: indent alignment is byte-based, and nested comments are not tracked.
+
+ vim:tw=78:ts=8:ft=help:norl:
